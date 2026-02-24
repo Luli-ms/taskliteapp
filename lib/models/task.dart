@@ -1,6 +1,8 @@
+import 'dart:convert';
+
 class Task {
   String title;
-  String priority; // Baja, Media, Alta
+  String priority;
   bool isCompleted;
 
   Task({
@@ -8,4 +10,25 @@ class Task {
     required this.priority,
     this.isCompleted = false,
   });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'title': title,
+      'priority': priority,
+      'isCompleted': isCompleted,
+    };
+  }
+
+  factory Task.fromMap(Map<String, dynamic> map) {
+    return Task(
+      title: map['title'],
+      priority: map['priority'],
+      isCompleted: map['isCompleted'],
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory Task.fromJson(String source) =>
+      Task.fromMap(json.decode(source));
 }
