@@ -15,7 +15,7 @@ class TaskLiteApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
-        colorSchemeSeed: Colors.blue,
+        colorSchemeSeed: Colors.white,
       ),
       home: const HomeScreen(),
     );

@@ -11,7 +11,6 @@ class AddTaskScreen extends StatefulWidget {
 class _AddTaskScreenState extends State<AddTaskScreen> {
   final _formKey = GlobalKey<FormState>();
   final _titleController = TextEditingController();
-
   String _selectedPriority = "Media";
 
   @override
@@ -19,6 +18,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Nueva tarea"),
+        backgroundColor: Colors.blueGrey,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
@@ -28,9 +28,11 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
             children: [
               TextFormField(
                 controller: _titleController,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: "Título",
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12)),
+                  prefixIcon: const Icon(Icons.task),
                 ),
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
@@ -41,10 +43,12 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
               ),
               const SizedBox(height: 20),
               DropdownButtonFormField<String>(
-                initialValue: _selectedPriority,
-                decoration: const InputDecoration(
+                value: _selectedPriority,
+                decoration: InputDecoration(
                   labelText: "Prioridad",
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12)),
+                  prefixIcon: const Icon(Icons.flag),
                 ),
                 items: const [
                   DropdownMenuItem(value: "Baja", child: Text("Baja")),
@@ -58,18 +62,30 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                 },
               ),
               const SizedBox(height: 30),
-              ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    final task = Task(
-                      title: _titleController.text.trim(),
-                      priority: _selectedPriority,
-                    );
-
-                    Navigator.pop(context, task);
-                  }
-                },
-                child: const Text("Guardar"),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blueGrey,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12))),
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      final task = Task(
+                        title: _titleController.text.trim(),
+                        priority: _selectedPriority,
+                      );
+                      Navigator.pop(context, task);
+                    }
+                  },
+                  icon: const Icon(Icons.save),
+                  label: const Text(
+                    "Guardar",
+                    style: TextStyle(fontSize: 16),
+                  ),
+                ),
               )
             ],
           ),
